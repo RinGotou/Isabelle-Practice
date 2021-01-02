@@ -147,9 +147,9 @@ lemma "itrev xs Nil = rev xs"
 lemma "itrev xs ys = rev xs @ ys"
   (*apply(induction xs)*)
   (*apply(auto)*)
-  (*IH is still too weak*)
+  (*IH is still too weak, use this instead*)
   apply(induction xs arbitrary: ys)
-   apply(auto)
+  apply(auto)
   done
   
   
