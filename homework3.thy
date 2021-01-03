@@ -67,7 +67,18 @@ lemma
        ''x'' ::= Plus (V ''x'') (N (-1));;
        ''y'' ::= Plus (V ''y'') (N (-1))
      )
-     {\<lambda>t. t ''y'' = y - x}"
+     {\<lambda>t. t ''y'' = y - x}"  
+  apply(rule strengthen_pre[where P="\<lambda>s. s ''x'' = x \<and> s ''y'' = y \<and> 0 \<le> x"])
+  apply(simp)
+  apply(rule While')
+   prefer 2
+   apply(simp)
+  apply(rule Seq)
+   prefer 2
+   apply(rule Assign)
+  apply(rule Assign')
+  apply(auto simp: algebra_simps)
+  
   sorry  (* replace with proof *)
 
 
