@@ -68,8 +68,8 @@ lemma
        ''y'' ::= Plus (V ''y'') (N (-1))
      )
      {\<lambda>t. t ''y'' = y - x}"  
-  apply(rule strengthen_pre[where P="\<lambda>s. s ''x'' = x \<and> s ''y'' = y \<and> 0 \<le> x"])
-  apply(simp)
+  apply(rule strengthen_pre[where P="\<lambda>s. s ''y'' = y - (x - s ''x'') \<and> s ''x'' \<ge> 0 \<and> 0 \<le> x"])
+   apply(simp)
   apply(rule While')
    prefer 2
    apply(simp)
@@ -77,10 +77,9 @@ lemma
    prefer 2
    apply(rule Assign)
   apply(rule Assign')
-  apply(auto simp: algebra_simps)
-  
-  sorry  (* replace with proof *)
-
+  apply(simp)
+  done
+(*qed*)
 
 (* Problem 4 *)
 
@@ -91,7 +90,8 @@ lemma
      DO (''r'' ::= Plus (V ''r'') (N 1);;
             ''r2'' ::= Plus (V ''r2'') (Plus (Plus (V ''r'') (V ''r'')) (N 1)))
      {\<lambda>s. (s ''r'')^2 \<le> i \<and> i < (s ''r'' + 1)^2}"
-  sorry  (* replace with proof *)
-
-
+  (* TODO: *)
+  apply(rule strengthen_pre[where P="\<lambda>s. s ''x'' = i \<and> (s ''r'')^2 \<le> i \<and> s ''r2'' = ((s ''r'') + 1)^2 \<and> 0 \<le> (s ''r'')"])
+  apply(metis algebra_simps power2_eq_square)
+  sorry  
 end
