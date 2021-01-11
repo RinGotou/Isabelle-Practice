@@ -90,8 +90,23 @@ lemma
      DO (''r'' ::= Plus (V ''r'') (N 1);;
             ''r2'' ::= Plus (V ''r2'') (Plus (Plus (V ''r'') (V ''r'')) (N 1)))
      {\<lambda>s. (s ''r'')^2 \<le> i \<and> i < (s ''r'' + 1)^2}"
-  (* TODO: *)
-  apply(rule strengthen_pre[where P="\<lambda>s. s ''x'' = i \<and> (s ''r'')^2 \<le> i \<and> s ''r2'' = ((s ''r'') + 1)^2 \<and> 0 \<le> (s ''r'')"])
-  apply(metis algebra_simps power2_eq_square)
-  sorry  
+  apply(rule Seq)
+   prefer 2
+  apply(rule While'[where P= "\<lambda>s. s ''x'' = i \<and> (s ''r'')^2 \<le> i \<and> s ''r2'' = ((s ''r'') + 1)^2 \<and> 0 \<le> (s ''r'')"])
+    apply(rule Seq)
+     prefer 2
+     apply(rule Assign)
+    apply(simp add: power2_eq_square algebra_simps)
+    apply(rule Assign')
+    apply(simp add: algebra_simps)
+   apply(simp)
+  apply(rule Seq)
+   prefer 2
+   apply(rule Assign)
+  apply(simp)
+  apply(rule Assign')
+  apply(auto)
+  done
+
+(*qed*)
 end
